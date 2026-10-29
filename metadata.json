@@ -1,0 +1,7 @@
+{
+  "name": "Tsukuyomi Watch — The Samurai’s Celestial Guide",
+  "description": "An ancient Japanese astronomical observatory reimagined as a modern scientific dashboard for real-time stargazing forecasts, Night Honor Score telemetry, cosmic event tracking, and pixel-level astronomical image restoration.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+

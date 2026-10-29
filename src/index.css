@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-display: 'Cinzel', Georgia, serif;
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #07090E;
+    color: #F4F1EA;
+    overflow-x: hidden;
+  }
+
+  h1, h2, .font-display {
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+
+  .font-mono {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Custom Leaflet Ancient Scroll / Dark Observatory Theme */
+.leaflet-container {
+  background: #0B0E17 !important;
+  font-family: var(--font-sans) !important;
+}
+
+.tsukuyomi-map-tiles {
+  filter: invert(92%) hue-rotate(195deg) saturate(35%) brightness(88%) contrast(108%) sepia(18%);
+}
+
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: #111622 !important;
+  color: #F4F1EA !important;
+  border: 1px solid #262E42 !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.75) !important;
+  border-radius: 6px !important;
+}
+
+.leaflet-control-zoom a {
+  background-color: #111622 !important;
+  color: #D4AF37 !important;
+  border-color: #262E42 !important;
+}
+
+.leaflet-control-zoom a:hover {
+  background-color: #1A2234 !important;
+  color: #F4F1EA !important;
+}
+
+.leaflet-control-attribution {
+  background: rgba(7, 9, 14, 0.85) !important;
+  color: #8E98B0 !important;
+  font-size: 10px !important;
+}
+
+.leaflet-control-attribution a {
+  color: #D4AF37 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+

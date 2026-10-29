@@ -1,0 +1,656 @@
+# MASTER BUILD PROMPT — PECathon 2026
+# TSUKUYOMI WATCH: THE SAMURAI’S CELESTIAL GUIDE
+
+Act as a senior full-stack engineer, astronomy-data engineer, AI/ML engineer, UI/UX designer, and software tester working together to build a complete hackathon-ready web application.
+
+Build a functional, polished, responsive web application named **Tsukuyomi Watch — The Samurai’s Celestial Guide**.
+
+This is a real hackathon submission, not just a landing page, static mockup, or collection of non-functional UI cards. Prioritize working features, correct data, transparent limitations, and a reliable live demonstration.
+
+The official problem statement below is the primary source of truth. Implement its required features before attempting bonus features.
+
+---
+
+# PART 1 — OFFICIAL PROBLEM STATEMENT
+
+## Background and Description
+
+In feudal Japan, samurai and travelers read the heavens to time their battles, journeys, and rituals. The moon phases, falling stars, and the movement of constellations guided every decision.
+
+Today, finding a clear night sky and knowing when celestial events occur is still hard: weather, cloud cover, light pollution, and scattered event sources all get in the way. Meanwhile, astronomical images from Hubble, JWST, and ground telescopes are often clouded by noise and blur.
+
+Participants must build a web platform that acts as a modern warrior’s celestial guide. It should help users find the best stargazing spots, track cosmic events, and restore and explore astronomical images with AI, all wrapped in a Japanese-inspired, mystic interface.
+
+## Required Component 1: The Watchtower — Stargazing Location Finder
+
+- Fetch real-time weather data, including cloud cover, humidity, and visibility, from open APIs.
+- Calculate a “Night Honor Score,” representing stargazing visibility, optionally including a light-pollution indicator.
+- Show top nearby spots on an interactive map, styled like an ancient scroll map with shrines, mountains, and temples as markers.
+
+## Required Component 2: The Celestial Scroll — Space Event Tracker
+
+- List meteor showers, eclipses, moon phases, ISS passes, and rocket launches.
+- Use APIs such as Open-Meteo and NASA where appropriate.
+- Filter events by type and date, using a calendar inspired by the traditional lunar calendar.
+- Include an alert feature, for example: “The Moon Rises Tonight at 8:14 PM.”
+
+## Required Component 3: The Spirit Lens — AI Image Restoration
+
+- Allow users to upload an astronomical image and reduce noise and blur using an AI model. Pre-trained models are allowed.
+- Do not invent or add fake astronomical details. Restored images must remain faithful to the original.
+- Detect stars and galaxies and display basic information such as brightness and size.
+
+## Required Component 4: The Dojo Dashboard — Visualization Interface
+
+- Provide an interactive before/after slider for original versus restored images.
+- Include zoom and overlays for detected astronomical objects.
+
+## Theme Requirements
+
+- Japanese-inspired interface using ink-wash aesthetics, torii gates, cherry blossoms, and samurai-inspired motifs.
+- Use a red, black, and gold palette.
+- Include moon-centric design elements, a moon-phase tracker, and a night-mode theme.
+
+## Bonus Challenges
+
+- Integrate live telescope data through NASA SkyView API.
+- Add spectral or time-domain analysis for transient-event detection.
+- Gamify observations through an Honor Points system.
+
+## Expected Solution
+
+A complete web application that presents real-time stargazing conditions, curates space events, enhances and analyzes astronomical images using AI, and offers an immersive samurai-and-moon-themed interface.
+
+---
+
+# PART 2 — TECHNICAL REQUIREMENTS
+
+## 2.1 Choose a practical architecture
+
+Use the existing framework provided by Google AI Studio if the project already has a working setup. Otherwise, prefer:
+
+- Frontend: React + TypeScript.
+- Build tool: Vite, if supported.
+- Styling: Tailwind CSS if available, or clean CSS.
+- Icons: Lucide or another installed icon library.
+- Maps: Leaflet with OpenStreetMap tiles, if integration is feasible.
+- Weather: Open-Meteo APIs.
+- Astronomy: NASA APIs and other suitable, documented public astronomy data sources.
+- Image processing: a real image-processing library or a genuinely integrated restoration model.
+- AI assistant: Gemini through the available secure integration, only if it can be configured properly.
+
+Do not replace a working project with an unnecessary rewrite.
+
+First inspect the existing files, package dependencies, project structure, and available integrations. Then implement the application using the current architecture.
+
+Avoid unnecessary dependencies and overly complicated infrastructure.
+
+## 2.2 API and data rules
+
+Use real public data sources wherever feasible.
+
+- Never invent live weather readings, event dates, rocket launches, ISS passes, or astronomical measurements.
+- Never fabricate a successful API response.
+- Display the source and relevant timestamp for live data.
+- Distinguish live data, calculated results, cached data, and demonstration data.
+- Handle API failures, loading states, timeouts, missing fields, and rate limits gracefully.
+- If an API requires a key, explain how to configure it.
+- Never expose private API keys in client-side source code or commit them to GitHub.
+- Use environment variables and a server-side endpoint when a secret must be protected.
+- Do not make the entire app dependent on one API.
+
+If an integration cannot be completed, build a clear fallback experience and label it honestly. Do not claim that an incomplete integration works.
+
+---
+
+# PART 3 — VISUAL DESIGN
+
+Create a premium, atmospheric interface that feels like an ancient Japanese astronomical observatory reimagined as a modern scientific dashboard.
+
+The interface must look distinctive during a hackathon judging demonstration while remaining readable and accessible.
+
+## Design system
+
+- Background: deep ink black and midnight navy.
+- Primary accents: vermilion red and antique gold.
+- Secondary accents: moon silver, muted indigo, and warm ivory.
+- Use subtle gradients, restrained glow, fine borders, and atmospheric textures.
+- Use elegant typography with a readable modern sans-serif for data.
+- Include tasteful moon illustrations, star fields, subtle clouds, and Japanese-inspired decorative details.
+- Avoid excessive animation, visual clutter, generic dashboard templates, and oversized empty areas.
+- Use motion sparingly for page transitions, moon phases, and loading feedback.
+- Respect reduced-motion preferences.
+- Ensure text contrast and mobile readability.
+
+Use the theme consistently across all pages, not just the homepage.
+
+## Application navigation
+
+Build these main sections:
+
+1. Dashboard
+2. Stargazing Finder
+3. Celestial Events
+4. Spirit Lens
+5. About / Methodology
+
+Use a consistent navigation bar or sidebar, responsive mobile navigation, and a clear page title.
+
+Every visible navigation item and button must have a real action.
+
+---
+
+# PART 4 — FEATURE A: THE WATCHTOWER
+
+Build a functioning stargazing finder.
+
+## A.1 Location selection
+
+Allow the user to:
+
+- Enter a city or location manually.
+- Use browser geolocation only after explicit permission.
+- View the selected location and coordinates.
+- Change the location easily.
+- See a clear message if geolocation is denied or unavailable.
+
+Never require geolocation for the application to work.
+
+If a geocoding API is used, implement its actual request and error handling.
+
+## A.2 Live weather integration
+
+Integrate Open-Meteo or another appropriate open weather API.
+
+Retrieve the best available values for:
+
+- Cloud cover.
+- Relative humidity.
+- Visibility, if the chosen API actually supplies it.
+- Temperature.
+- Wind speed, when available.
+- Precipitation or rain probability, when available.
+- Forecast time and update timestamp.
+
+Use the correct units and explain them.
+
+Do not silently substitute humidity or another weather variable for visibility.
+
+If visibility is unavailable, display “Not available from this source” and explain that the score uses the variables actually available.
+
+Display the next several forecast time slots and clearly indicate which forecast corresponds to nighttime.
+
+## A.3 Night Honor Score
+
+Create a transparent score from 0–100 that estimates how favorable conditions are for stargazing.
+
+Use a documented, deterministic calculation based on available variables.
+
+Possible considerations:
+
+- Lower cloud cover should improve the score.
+- Lower humidity may improve the score.
+- Better measured visibility should improve the score.
+- Rain or significant precipitation should reduce the score.
+- Wind may be included as a secondary comfort factor if justified.
+
+Define the weights in one clearly named function. Normalize values correctly, clamp the result between 0 and 100, and handle missing data safely.
+
+Do not pretend this is a scientifically validated astronomy forecast. Describe it as an indicative weather-based score, and make the calculation inspectable in the UI or methodology section.
+
+Display:
+
+- Score and visual gauge.
+- Favorable, moderate, or poor conditions.
+- The factors affecting the result.
+- The forecast time used.
+- A short explanation of why conditions are suitable or unsuitable.
+
+Do not label weather-based estimates as guaranteed sky visibility.
+
+## A.4 Nearby stargazing spots
+
+Show top nearby spots on an interactive map.
+
+- Use Leaflet and OpenStreetMap if feasible.
+- Provide a useful map centered on the selected location.
+- Use distinctive, Japanese-inspired markers for suggested spots.
+- Clicking a marker should open a useful information panel.
+- Show the spot name, coordinates or address where available, distance if calculated correctly, and the basis for its recommendation.
+- Provide a list synchronized with the map.
+- Let users select a spot and inspect its information.
+
+Do not invent real nearby observatories, parks, mountains, or temples.
+
+Use a genuine places data source or a clearly identified curated dataset with verifiable locations. If real place discovery cannot be completed, provide a working location-based map with clearly labeled sample markers rather than falsely presenting them as verified recommendations.
+
+Explain that actual sky darkness depends on local light pollution and other factors not necessarily captured by weather data.
+
+---
+
+# PART 5 — FEATURE B: THE CELESTIAL SCROLL
+
+Build an event-tracking page that helps users explore upcoming astronomical events.
+
+## B.1 Event categories
+
+Support the following categories:
+
+- Meteor showers.
+- Solar and lunar eclipses.
+- Moon phases.
+- ISS passes.
+- Rocket launches.
+
+Use real APIs or reliable published datasets appropriate to each category.
+
+Potential sources include NASA APIs, astronomy event datasets, and suitable public orbital or launch data providers.
+
+Do not assume one API provides every category.
+
+Investigate the actual response schema and availability of each source before implementing the integration.
+
+## B.2 Event cards
+
+Each event card should show:
+
+- Event name.
+- Event category.
+- Date and time in the user's selected location or clearly identified timezone.
+- Short description.
+- Visibility or observation guidance when supported by reliable data.
+- Data source.
+- Link to further information where available.
+
+For events whose local visibility cannot be established, say so rather than promising that the user can see them.
+
+## B.3 Filters and calendar
+
+Implement functional filters for:
+
+- Event category.
+- Date range.
+- Upcoming versus past events, if historical data is available.
+
+Provide a moon-inspired calendar or timeline.
+
+Show moon phases using real calculated or sourced dates, not randomly assigned icons.
+
+Calendar navigation and filters must actually update the displayed events.
+
+## B.4 Moon information and alerts
+
+Display the current or selected-date moon phase using a reliable calculation or data source.
+
+Where a suitable source is available, show local moonrise and moonset times.
+
+Build an alert interface that lets the user select an event or astronomical occurrence and view its relevant time.
+
+For example, display a moonrise notification only when the underlying location and data support the stated time.
+
+If browser notifications are implemented, request permission explicitly and explain the limitations. Otherwise, use in-app alerts.
+
+Do not claim background notifications will work if the app has no reliable scheduling mechanism.
+
+---
+
+# PART 6 — FEATURE C: THE SPIRIT LENS
+
+This is one of the most important hackathon features. Build a working astronomical image-analysis experience, not a decorative upload page.
+
+## C.1 Image upload
+
+Allow users to:
+
+- Upload PNG, JPEG, or supported astronomical image formats.
+- Preview the original image.
+- See image dimensions and file size.
+- Replace the image.
+- Reset the workflow.
+- Receive clear errors for unsupported files or excessively large uploads.
+
+Process files safely and avoid uploading user images to external services without clear disclosure.
+
+## C.2 Genuine image restoration
+
+Implement a real, demonstrable image-processing pipeline.
+
+Preferred order:
+
+1. Use a genuine pretrained image-restoration model if it can be integrated and tested within the available environment.
+2. Otherwise, implement actual pixel-level image-processing operations such as denoising, contrast adjustment, brightness adjustment, and sharpening through a suitable image-processing library.
+3. Clearly label conventional processing as image enhancement, not AI restoration.
+
+If a real model is integrated, document its name, role, limitations, and whether processing is local or remote.
+
+Do not invent a model, fake inference logs, simulate AI processing with a timeout, or label ordinary CSS filters as AI.
+
+Preserve the original image and let users compare it with the processed result.
+
+## C.3 Restoration controls
+
+Provide usable controls for available operations:
+
+- Denoising.
+- Brightness.
+- Contrast.
+- Sharpening.
+- Color or intensity adjustment, where appropriate.
+
+Include:
+
+- Process / Restore button.
+- Reset button.
+- Original-versus-processed comparison.
+- Processing status.
+- Error feedback.
+- Download processed image.
+
+Use sensible limits so sharpening and contrast cannot create misleading artifacts too easily.
+
+Explain that aggressive processing may create artifacts or change apparent brightness. Do not claim that processing reveals genuine astronomical details that were absent from the source.
+
+## C.4 Before-and-after comparison
+
+Implement a real interactive comparison slider or an equivalent draggable divider.
+
+The original and processed images must remain aligned and use the same dimensions.
+
+Also provide:
+
+- Zoom in and out.
+- Reset zoom.
+- A toggle for original and processed images.
+- A clear visual indication of which image is being viewed.
+
+Do not use a static screenshot as a substitute for the actual comparison control.
+
+## C.5 Star and galaxy detection
+
+Implement a basic, honest astronomical-object detection feature.
+
+Use a suitable algorithm or a genuinely integrated pretrained detector if available.
+
+For a feasible baseline, consider identifying candidate bright point-like objects from image intensity, local contrast, and connected regions.
+
+Display detected candidates as overlays on the image.
+
+For each candidate, show only measurements that the implementation can actually calculate, such as:
+
+- Pixel coordinates.
+- Estimated pixel area or apparent pixel diameter.
+- Relative intensity or a clearly defined brightness proxy.
+
+Distinguish detected candidates from confirmed stars or galaxies.
+
+Do not invent celestial object names, distances, physical sizes, scientific magnitudes, or classifications without suitable calibration and evidence.
+
+Include a legend and a way to toggle detection overlays.
+
+If object detection fails or the image is unsuitable, explain why and let the user continue using the image editor.
+
+---
+
+# PART 7 — FEATURE D: THE DOJO DASHBOARD
+
+Create a dashboard that brings the application together.
+
+Display:
+
+- Selected location.
+- Latest available weather summary.
+- Night Honor Score.
+- Next suitable forecast window, if calculated from available data.
+- Current or selected moon phase.
+- Upcoming astronomical events.
+- A quick link to the Stargazing Finder.
+- A quick link to the Spirit Lens.
+- A concise explanation of data freshness.
+
+Make dashboard cards clickable when they lead to relevant details.
+
+Do not fill the dashboard with hardcoded values presented as live information.
+
+For first-time users, show a clear onboarding path:
+
+1. Select a location.
+2. Check the forecast.
+3. Explore celestial events.
+4. Upload an astronomical image.
+
+Include useful loading, empty, offline, and error states.
+
+---
+
+# PART 8 — OPTIONAL AI ASTRONOMY ASSISTANT
+
+Add an astronomy assistant only after the core requirements work.
+
+If a Gemini integration is available, implement it through a suitable secure integration.
+
+The assistant should help users understand:
+
+- Weather-based stargazing conditions.
+- Moon phases.
+- Upcoming events.
+- Image-processing results.
+- General astronomy questions.
+
+When relevant, pass actual retrieved weather or event information into the assistant.
+
+Rules:
+
+- Do not invent live weather or event data.
+- Distinguish retrieved facts from general astronomy explanations.
+- Do not claim to scientifically classify astronomical images unless the actual model supports that capability.
+- Explain uncertainty.
+- Handle model/API errors gracefully.
+- Do not expose secret keys in frontend code or logs.
+
+If the AI API cannot be configured, keep the rest of the application fully functional and show a clear setup message for the assistant.
+
+Do not spend excessive hackathon time on this optional feature before finishing the required components.
+
+---
+
+# PART 9 — QUALITY, ACCESSIBILITY, AND RELIABILITY
+
+Implement the following:
+
+- Responsive desktop, tablet, and mobile layouts.
+- Functional buttons, filters, tabs, maps, sliders, uploads, and downloads.
+- Appropriate keyboard accessibility and visible focus states.
+- Meaningful labels and accessible controls.
+- Consistent error handling.
+- Loading indicators for network operations.
+- Sensible timeouts and retries where appropriate.
+- No unhandled promise rejections.
+- No broken navigation.
+- No fake progress indicators.
+- No secrets committed to the repository.
+- No fabricated test results.
+- No placeholder buttons that appear operational but do nothing.
+
+Keep components modular and maintainable.
+
+Separate API requests, data transformation, score calculations, image processing, and UI components.
+
+Use TypeScript types for API responses and application data when TypeScript is available.
+
+Do not use `any` everywhere merely to suppress type errors.
+
+Avoid unnecessary complexity, excessive dependencies, and features that cannot be demonstrated.
+
+---
+
+# PART 10 — TESTING AND VERIFICATION
+
+After implementation, test the actual application.
+
+## Stargazing tests
+
+1. A valid location can be selected.
+2. Weather data loads successfully from the configured API.
+3. The displayed weather values correspond to the returned data.
+4. Missing visibility data is handled honestly.
+5. The Night Honor Score remains between 0 and 100.
+6. Changing forecast conditions changes the score according to the documented formula.
+7. Weather API failure produces a useful error or fallback state.
+8. Map markers and spot details work.
+
+## Celestial event tests
+
+1. Events load from the configured source.
+2. Category filters work.
+3. Date filters work.
+4. Calendar navigation works.
+5. Timezones are handled consistently.
+6. Unavailable categories are clearly identified.
+7. The app does not display invented live events.
+
+## Spirit Lens tests
+
+1. A valid image can be uploaded and previewed.
+2. Invalid file types are handled.
+3. Image-processing controls affect the actual output.
+4. The original remains available.
+5. The comparison slider works.
+6. Zoom and reset controls work.
+7. Object overlays align with the image.
+8. The processed image can be downloaded.
+9. Errors do not crash the application.
+
+## General tests
+
+1. Every main navigation item works.
+2. The layout works on mobile and desktop.
+3. Browser console errors are investigated.
+4. The application builds successfully.
+5. Available tests and lint checks are run.
+6. API failures do not crash unrelated features.
+7. Secrets are not exposed in the repository.
+
+Fix errors discovered during testing before adding optional features.
+
+Never claim a test passed unless it was actually run and its result was checked.
+
+---
+
+# PART 11 — HACKATHON PRIORITY ORDER
+
+The hackathon is time-limited. Use this implementation order.
+
+## Priority 1: Working foundation
+
+- Inspect the current project.
+- Build the shared design system and navigation.
+- Implement all main pages and responsive layouts.
+- Verify that the application starts successfully.
+
+## Priority 2: Real stargazing functionality
+
+- Implement location selection.
+- Integrate weather data.
+- Implement and explain the Night Honor Score.
+- Build the map and location recommendations.
+
+## Priority 3: Real celestial events
+
+- Integrate the most feasible reliable event sources.
+- Implement event cards, filters, calendar, and moon information.
+- Clearly disclose categories that cannot yet be supported.
+
+## Priority 4: Working image lab
+
+- Implement image upload and actual processing.
+- Add original-versus-processed comparison.
+- Add zoom and download.
+- Implement basic object-candidate detection and overlays.
+- Integrate a real restoration model only if feasible and testable.
+
+## Priority 5: Final quality
+
+- Run tests.
+- Fix broken features.
+- Improve responsiveness.
+- Add error and loading states.
+- Complete documentation.
+- Prepare a reliable demonstration.
+
+## Priority 6: Bonuses
+
+Only after the required features are stable, consider:
+
+- AI astronomy assistant.
+- NASA SkyView integration.
+- Honor Points.
+- Additional analysis features.
+
+If time becomes limited, finish a smaller set of genuinely working features rather than producing many incomplete features.
+
+---
+
+# PART 12 — README AND GITHUB READINESS
+
+Create a professional README.md containing:
+
+1. Project name and problem being solved.
+2. Main features.
+3. Screenshots section, with instructions for adding genuine screenshots.
+4. Architecture and component overview.
+5. Technologies used.
+6. APIs and data sources.
+7. Night Honor Score formula.
+8. Image-processing methodology and limitations.
+9. Setup and installation instructions.
+10. Environment variable configuration using a safe `.env.example`.
+11. How to run the application locally.
+12. Testing instructions and actual test results.
+13. Known limitations and unsupported features.
+14. Team contributions section that can be filled in accurately.
+
+Include an appropriate `.gitignore`.
+
+Never include API keys, tokens, credentials, or personal secrets in the README, source code, or Git repository.
+
+Do not claim the project is deployed until a real deployment exists.
+
+---
+
+# PART 13 — WORKING AGREEMENT
+
+Before making major changes:
+
+1. Inspect the project files and existing implementation.
+2. Identify which required features already work.
+3. Identify missing requirements and technical blockers.
+4. Create a concise implementation plan.
+5. Implement the highest-priority missing features.
+6. Run the application and verify the changes.
+7. Fix actual errors.
+8. Report which features are complete, incomplete, or blocked.
+
+Do not stop after producing a plan. Proceed to implementation.
+
+If the current project already contains working features, preserve them and improve the existing code rather than rebuilding unnecessarily.
+
+If a technical limitation prevents an exact requirement from being completed, explain the limitation and implement the closest honest, testable alternative.
+
+Do not ask me to approve every small decision. Make sensible engineering decisions and continue, asking questions only when a missing choice genuinely blocks implementation.
+
+# FINAL ACCEPTANCE CRITERIA
+
+The project is ready for demonstration only when:
+
+- The interface is visually polished and responsive.
+- The Stargazing Finder uses real weather data where the integration is configured.
+- The Night Honor Score is calculated using an inspectable formula.
+- The map and location interactions work.
+- The Celestial Events page uses actual data sources for the categories it claims to support.
+- The Spirit Lens performs real image processing and supports an interactive comparison.
+- Object detection displays genuine algorithmic results, with honest labeling.
+- The required features have been tested.
+- API limitations and scientific limitations are clearly disclosed.
+- The README explains setup, architecture, data sources, and known limitations.
+
+Start by inspecting the current project and creating the implementation plan. Then build the application, run it, test it, and fix issues. Prioritize real functionality and verifiable results over decorative complexity.
